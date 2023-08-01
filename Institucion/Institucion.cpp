@@ -18,6 +18,14 @@ const string ASSIGNMENTS[MAX_ASSIG] = {
     "Spanish"
 };
 
+typedef enum {
+    E_COMP = 0,
+    E_PHYS_ED,
+    E_MATH,
+    E_GEO,
+    E_SPA
+}e_materias;
+
 const string PROFESIONES[] =
 {
     "Default Profession",
@@ -120,9 +128,13 @@ private:
 class Profesor : public Human {
 public:
 
-    Profesor(e_profession prof)
+    Profesor(string name, int age, char gender, e_profession prof)
     {
-        profession = PROFESIONES[prof];
+        this->Id = this->GenerateID();
+        this->Name = name;
+        this->Age = age;
+        this->Gender = gender;
+        this->profession = PROFESIONES[prof];
     };
 
     string profession;
@@ -153,6 +165,31 @@ private:
         return id;
     }
 };
+
+
+// Clase materia
+class Materia {
+public:
+    Materia(string nombre, int creditos, Profesor prof) :
+        Nombre(nombre), Creditos(creditos), Professor(prof)
+    {
+        //Nothing, yet
+    }
+
+    string Nombre;
+    int Creditos;
+    Profesor Professor;
+
+    void display()
+    {
+        cout << "Nombre:" << this->Nombre << endl;
+        cout << "Creditos:" << this->Creditos << endl;
+        cout << "Profesor:" << this->Professor.Name << endl;
+    }
+
+};
+
+
 
 
 ///////////// ADMIN  //////////////
@@ -200,7 +237,6 @@ void admin::imp() {
 }
 
 
-
 int main() {
 
     setlocale(LC_ALL, "spanish");
@@ -214,6 +250,20 @@ int main() {
     //    menuPrincipal();
     SetConsoleTextAttribute(hConsole, 11);
 
+    Profesor prof1("Manolo Echeverria", 30, 'M', E_COMP_SCI);
+    //prof1.create();
+    prof1.display();
+    Profesor prof2("Sandra Perez", 29, 'F',E_PHD_LIT);
+    //prof2.create();
+    prof2.display();
+
+
+    Materia espanol(ASSIGNMENTS[E_SPA], 80, prof2);
+    espanol.display();
+
+    Materia computacion(ASSIGNMENTS[E_COMP], 80, prof1);
+    computacion.display();
+
     Alumno alumno1(E_PRIMER_SEMESTER);
     Alumno alumno2(E_TERCER_SEMESTER);
 
@@ -221,12 +271,6 @@ int main() {
     //alumno1.display();
     alumno2.create("Citlali Alavrez", 15, 'F');
     //alumno2.display();
-
-    Profesor prof1(E_COMP_SCI);
-    prof1.create("Manolo", 30, 'M');
-    prof1.display();
-
-
 ;
     cin >> opcion;
 
