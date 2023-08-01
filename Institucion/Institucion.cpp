@@ -76,55 +76,6 @@ public:
 };
 
 
-// Clase Alumno
-class Alumno: public Human {
-public:
-
-    Alumno(string name, int age, char gender, e_semester semester = E_PRIMER_SEMESTER)
-        : Semester(semester)
-    {
-        this->Name = name;
-        this->Age = age;
-        this->Gender = gender;
-        copy(begin(ASSIGNMENTS), end(ASSIGNMENTS), begin(Assig));
-    }
-
-    e_semester Semester;
-    string Assig[MAX_ASSIG];
-
-    void create(string name, int age, char gender)
-    {
-        this->Id = this->GenerateID();
-        this->Name = name;
-        this->Age = age;
-        this->Gender = gender;
-    }
-
-    void display(void)
-    {
-        cout << "Id:" << this->Id << endl;
-        cout << "Nombre:" << this->Name << endl;
-        cout << "Edad:" << this->Age << endl;
-        cout << "Genero:" <<this->Gender << endl;
-        cout << "Semester:" <<this->Semester << endl;
-        cout << "Asignaturas:" << endl;
-
-        for (int i = 0; i < MAX_ASSIG; i++)
-        {
-            cout << to_string(i+1) << "--" << this->Assig[i] << endl;
-        }
-    }
-
-
-private:
-    int GenerateID()
-    {
-        int id = rand() % 100;
-        return id;
-    }
-};
-
-
 
 
 // Clase Profesor
@@ -192,8 +143,58 @@ public:
 
 };
 
+Profesor prof_default("Default Default", 1, 'M', PROFESIONES[E_COMP_SCI]);
+Materia Default_assig(ASSIGNMENTS[E_COMP], 80, prof_default);
+
+// Clase Alumno
+class Alumno : public Human {
+public:
+    Alumno(string name, int age, char gender, e_semester semester = E_PRIMER_SEMESTER)
+        : Semester(semester)
+    {
+        this->Name = name;
+        this->Age = age;
+        this->Gender = gender;
+
+    }
+
+    e_semester Semester;
+    Materia Assig[MAX_ASSIG] = { Default_assig,Default_assig,Default_assig,Default_assig,Default_assig };
+    int dummy;
+
+    void create(string name, int age, char gender)
+    {
+        this->Id = this->GenerateID();
+        this->Name = name;
+        this->Age = age;
+        this->Gender = gender;
+    }
+
+    //void materias(Materia Materias[)
+
+    void display(void)
+    {
+        cout << "Id:" << this->Id << endl;
+        cout << "Nombre:" << this->Name << endl;
+        cout << "Edad:" << this->Age << endl;
+        cout << "Genero:" << this->Gender << endl;
+        cout << "Semester:" << this->Semester << endl;
+        cout << "Asignaturas:" << endl;
+
+        for (int i = 0; i < MAX_ASSIG; i++)
+        {
+            cout << to_string(i + 1) << "--" << this->Assig[i].Nombre << endl;
+        }
+    }
 
 
+private:
+    int GenerateID()
+    {
+        int id = rand() % 100;
+        return id;
+    }
+};
 
 ///////////// ADMIN  //////////////
 
@@ -258,6 +259,7 @@ int main() {
     prof1.display();
     Profesor prof2("Sandra Perez", 29, 'F',PROFESIONES[E_PHD_LIT]);
     //prof2.create();
+
     prof2.display();
 
 
