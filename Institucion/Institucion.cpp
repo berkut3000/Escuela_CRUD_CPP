@@ -18,6 +18,34 @@ const string ASSIGNMENTS[MAX_ASSIG] = {
     "Spanish"
 };
 
+const string PROFESIONES[] =
+{
+    "Default Profession",
+    "Msc. Comp Sci",
+    "Coach",
+    "Phd. Math",
+    "Phd. Anthropology",
+    "Phd. Literature"
+};
+
+typedef enum {
+    E_DEFAULT_PROFESSION = 0,
+    E_COMP_SCI,
+    E_COACH,
+    E_PHD_MATH,
+    E_PHD_ANTHRO,
+    E_PHD_LIT
+}e_profession;
+
+typedef enum {
+    E_PRIMER_SEMESTER = 1,
+    E_SEGUNDO_SEMESTER,
+    E_TERCER_SEMESTER,
+    E_CUARTO_SEMESTER,
+    E_QUINTO_SEMESTER,
+    E_SEXTO_SEMESTER
+}e_semester;
+
 // Para cambiar colores
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -44,13 +72,13 @@ public:
 class Alumno: public Human {
 public:
 
-    Alumno(int semester = 1)
+    Alumno(e_semester semester = E_PRIMER_SEMESTER)
         : Semester(semester)
     {
         copy(begin(ASSIGNMENTS), end(ASSIGNMENTS), begin(Assig));
     }
 
-    int Semester;
+    e_semester Semester;
     string Assig[MAX_ASSIG];
 
     void create(string name, int age, char gender)
@@ -67,7 +95,7 @@ public:
         cout << "Nombre:" << this->Name << endl;
         cout << "Edad:" << this->Age << endl;
         cout << "Genero:" <<this->Gender << endl;
-        cout << "Semestre:" <<this->Semester << endl;
+        cout << "Semester:" <<this->Semester << endl;
         cout << "Asignaturas:" << endl;
 
         for (int i = 0; i < MAX_ASSIG; i++)
@@ -84,6 +112,48 @@ private:
         return id;
     }
 };
+
+
+
+
+// Clase Profesor
+class Profesor : public Human {
+public:
+
+    Profesor(e_profession prof)
+    {
+        profession = PROFESIONES[prof];
+    };
+
+    string profession;
+    int cedula;
+
+    void create(string name, int age, char gender)
+    {
+        this->Id = this->GenerateID();
+        this->Name = name;
+        this->Age = age;
+        this->Gender = gender;
+    }
+
+    void display(void)
+    {
+        cout << "Nombre:" << this->Name << endl;
+        cout << "Genero:" << this->Gender << endl;
+        cout << "Edad:" << this->Age << endl;
+        cout << "Profesion:" << this->profession << endl;
+        cout << "CEDULA:" << this->Id << endl;
+    }
+
+
+private:
+    int GenerateID()
+    {
+        int id = rand() % 10000;
+        return id;
+    }
+};
+
 
 ///////////// ADMIN  //////////////
 
@@ -144,13 +214,17 @@ int main() {
     //    menuPrincipal();
     SetConsoleTextAttribute(hConsole, 11);
 
-    Alumno alumno1(2);
-    Alumno alumno2(1);
+    Alumno alumno1(E_PRIMER_SEMESTER);
+    Alumno alumno2(E_TERCER_SEMESTER);
 
     alumno1.create("Antonio Perez", 16, 'M');
-    alumno1.display();
+    //alumno1.display();
     alumno2.create("Citlali Alavrez", 15, 'F');
-    alumno2.display();
+    //alumno2.display();
+
+    Profesor prof1(E_COMP_SCI);
+    prof1.create("Manolo", 30, 'M');
+    prof1.display();
 
 
 ;
