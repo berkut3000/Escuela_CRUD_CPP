@@ -80,9 +80,12 @@ public:
 class Alumno: public Human {
 public:
 
-    Alumno(e_semester semester = E_PRIMER_SEMESTER)
+    Alumno(string name, int age, char gender, e_semester semester = E_PRIMER_SEMESTER)
         : Semester(semester)
     {
+        this->Name = name;
+        this->Age = age;
+        this->Gender = gender;
         copy(begin(ASSIGNMENTS), end(ASSIGNMENTS), begin(Assig));
     }
 
@@ -128,13 +131,13 @@ private:
 class Profesor : public Human {
 public:
 
-    Profesor(string name, int age, char gender, e_profession prof)
+    Profesor(string name, int age, char gender, string prof)
     {
         this->Id = this->GenerateID();
         this->Name = name;
         this->Age = age;
         this->Gender = gender;
-        this->profession = PROFESIONES[prof];
+        this->profession = prof;
     };
 
     string profession;
@@ -250,10 +253,10 @@ int main() {
     //    menuPrincipal();
     SetConsoleTextAttribute(hConsole, 11);
 
-    Profesor prof1("Manolo Echeverria", 30, 'M', E_COMP_SCI);
+    Profesor prof1("Manolo Echeverria", 30, 'M', PROFESIONES[E_COMP_SCI]);
     //prof1.create();
     prof1.display();
-    Profesor prof2("Sandra Perez", 29, 'F',E_PHD_LIT);
+    Profesor prof2("Sandra Perez", 29, 'F',PROFESIONES[E_PHD_LIT]);
     //prof2.create();
     prof2.display();
 
@@ -264,13 +267,13 @@ int main() {
     Materia computacion(ASSIGNMENTS[E_COMP], 80, prof1);
     computacion.display();
 
-    Alumno alumno1(E_PRIMER_SEMESTER);
-    Alumno alumno2(E_TERCER_SEMESTER);
+    Alumno alumno1("Antonio Perez", 16, 'M', E_PRIMER_SEMESTER);
+    Alumno alumno2("Citlali Alavrez", 15, 'F', E_TERCER_SEMESTER);
 
-    alumno1.create("Antonio Perez", 16, 'M');
-    //alumno1.display();
-    alumno2.create("Citlali Alavrez", 15, 'F');
-    //alumno2.display();
+    //alumno1.create();
+    alumno1.display();
+    //alumno2.create("Citlali Alavrez", 15, 'F');
+    alumno2.display();
 ;
     cin >> opcion;
 
